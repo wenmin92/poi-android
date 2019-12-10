@@ -4,21 +4,20 @@ import android.Manifest
 import android.content.Intent
 import android.os.Bundle
 import android.os.Environment
-import android.support.v4.content.FileProvider
-import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import android.view.View
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.FileProvider
 import org.apache.poi.ss.usermodel.HorizontalAlignment
-import org.apache.poi.ss.usermodel.Sheet
 import org.apache.poi.ss.usermodel.VerticalAlignment
-import org.apache.poi.ss.usermodel.Workbook
 import org.apache.poi.ss.usermodel.charts.AxisCrosses
 import org.apache.poi.ss.usermodel.charts.AxisPosition
 import org.apache.poi.ss.usermodel.charts.DataSources
 import org.apache.poi.ss.usermodel.charts.LegendPosition
 import org.apache.poi.ss.util.CellRangeAddress
 import org.apache.poi.xssf.usermodel.XSSFChart
+import org.apache.poi.xssf.usermodel.XSSFSheet
 import org.apache.poi.xssf.usermodel.XSSFWorkbook
 import org.openxmlformats.schemas.drawingml.x2006.chart.CTTitle
 import pub.devrel.easypermissions.EasyPermissions
@@ -66,7 +65,7 @@ class MainActivity : AppCompatActivity() {
 
         if (file.exists()) file.delete()
 
-        val workbook: Workbook = XSSFWorkbook()
+        val workbook = XSSFWorkbook()
         workbook.createSheet("Test").populate()
         workbook.write(FileOutputStream(file))
 
@@ -86,7 +85,7 @@ class MainActivity : AppCompatActivity() {
     /**
      * Add random stuff to a spreadsheet to make sure everything works
      */
-    private fun Sheet.populate() {
+    private fun XSSFSheet.populate() {
         createFreezePane(1, 1)
         createRow(0).apply {
             createCell(0).apply {
